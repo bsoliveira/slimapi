@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+    app:
+        user: "1000:1000"
+        image: slimapi
+        container_name: slimapi-app
+        working_dir: /var/www/
+        command: php -S 0.0.0.0:8080 -t public
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+            - 8080:8080
+        volumes:
+            - ./:/var/www
+        networks:
+            - slimapi
+    db:
+        image: mysql:5.7
+        container_name: slimapi-db
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        ports:
+            - 3306:3306
+        volumes:
+            - ./resources/database:/docker-entrypoint-initdb.d
+        networks:
+            - slimapi
+networks:
+    slimapi:
+        driver: bridge
