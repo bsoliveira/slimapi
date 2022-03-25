@@ -9,6 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 use App\Repository\UserRepositoryInterface;
 use Slim\Exception\HttpBadRequestException;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 
 class AuthController extends Controller
 {
@@ -16,6 +17,11 @@ class AuthController extends Controller
      * @var UserRepositoryInterface
      */
     private UserRepositoryInterface $repository;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected LoggerInterface $logger;
 
     /**
      * @var string
@@ -33,9 +39,14 @@ class AuthController extends Controller
      * @param string $jwtkey
      * @param integer $jwtLifetime
      */
-    public function __construct(UserRepositoryInterface $repository, string $jwtkey, int $jwtLifetime)
-    {
+    public function __construct(
+        UserRepositoryInterface $repository,
+        LoggerInterface $logger,
+        string $jwtkey,
+        int $jwtLifetime
+    ) {
         $this->repository = $repository;
+        $this->logger = $logger;
         $this->jwtkey = $jwtkey;
         $this->jwtLifetime = $jwtLifetime;
     }
@@ -58,6 +69,8 @@ class AuthController extends Controller
                 ];
 
                 $token = JWT::encode($payload, $this->jwtkey, 'HS256');
+
+                $this->logger->info(sprintf('User of id: %s has logged in', $user->id));
 
                 return $this->respondWithData($response, [
                     'user' => $user,

@@ -102,7 +102,7 @@ class UserController extends Controller
             $params['sortBy'] ?? 'asc',
         );
 
-        $this->logger->debug('A list of users was viewed');
+        $this->logger->info('A list of users was viewed');
 
         return $this->respondWithData($response, $pagination);
     }
@@ -125,7 +125,7 @@ class UserController extends Controller
             throw new HttpNotFoundException($request, "The user of id: {$id} not found");
         }
 
-        $this->logger->debug("the user of id {$id} has been viewed");
+        $this->logger->info("the user of id {$id} has been viewed");
 
         return $this->respondWithData($response, $user);
     }
@@ -180,7 +180,7 @@ class UserController extends Controller
         // Persiste and return last insert id.
         $id  = $this->repository->insert($inputs);
 
-        $this->logger->debug("Created user of id: {$id}");
+        $this->logger->info("Created user of id: {$id}");
 
         $user = $this->repository->findById($id);
 
@@ -251,7 +251,7 @@ class UserController extends Controller
             'password' => $user->password,
         ], $id);
 
-        $this->logger->debug("Updated user id: {$id}");
+        $this->logger->info("Updated user id: {$id}");
 
         $updatedUser = $this->repository->findById($id);
 
@@ -278,7 +278,7 @@ class UserController extends Controller
 
         $this->repository->remove($id);
 
-        $this->logger->debug("Removed user of id: {$id}");
+        $this->logger->info("Removed user of id: {$id}");
 
 
         // Return 204 no content
