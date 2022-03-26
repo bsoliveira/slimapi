@@ -42,9 +42,9 @@ Edit the file `env.ini` and set the values according to your development environ
 ```sh
 DB_HOST       = "127.0.0.1"
 DB_PORT       = "3306"
-DB_DATABASE   = "php-api"
-DB_USERNAME   = "root"
-DB_PASSWORD   = "secret"
+DB_DATABASE   = "database"
+DB_USERNAME   = "dbusername"
+DB_PASSWORD   = "dbpassword"
 ```
 
 Start the php server.
@@ -53,7 +53,7 @@ Start the php server.
 $ php -S localhost:8080 -t public public/index.php;
 ```
 
-## List of Dependencies:
+## List of Dependencies
 
 - [slim/slim](https://github.com/slimphp/Slim): Slim is a PHP micro-framework that helps you quickly write simple yet powerful web applications and APIs.
 - [slim/psr7](https://github.com/slimphp/Slim-Psr7): Strict PSR-7 implementation used by the Slim Framework
@@ -66,7 +66,7 @@ $ php -S localhost:8080 -t public public/index.php;
 - [neomerx/cors-psr7](https://github.com/neomerx/cors-psr7): This package has framework agnostic Cross-Origin Resource Sharing (CORS) implementation. 
 
 
-## Routes:
+## Routes
 
 Home
 ```bash
