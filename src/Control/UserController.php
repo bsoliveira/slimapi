@@ -96,8 +96,8 @@ class UserController extends Controller
 
         $pagination = $this->repository->paginate(
             $params['search'] ?? null,
-            $params['page'] ?? 1,
-            $params['perPage'] ?? 200,
+            intval($params['page'] ?? 1),
+            intval($params['perPage'] ?? 200),
             $params['orderBy'] ?? 'id',
             $params['sortBy'] ?? 'asc',
         );
